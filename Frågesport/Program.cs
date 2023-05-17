@@ -43,6 +43,10 @@ Rectangle pointHitbox = new Rectangle(0, 0, point.width, point.height);
 
 Rectangle hitBox = new Rectangle(200, 200, sprite.width, sprite.height);
 
+List<Rectangle> powerUpHitboxes = new List<Rectangle>();
+powerUpHitboxes.Add(powerupHitbox);
+
+
 while (Raylib.WindowShouldClose() == false)
 {
     if (scene == "game")
@@ -100,6 +104,15 @@ while (Raylib.WindowShouldClose() == false)
         if (powerupState == 2)
         {
             movement *= 3f;
+        }
+
+        foreach (Rectangle Object in powerUpHitboxes)
+        {
+            if(Raylib.CheckCollisionRecs(hitBox, Object))
+            {
+                powerupState = 0;
+            }
+
         }
 
 
@@ -227,7 +240,6 @@ while (Raylib.WindowShouldClose() == false)
             pointHitbox.y = generator.Next(500);
             lastIncrease = 0;
             gamemode = "pointgrab";
-
         }
 
     }
